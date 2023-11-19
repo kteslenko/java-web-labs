@@ -1,0 +1,58 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Create Client</title>
+</head>
+
+<body>
+
+<div id="header">
+    <div id="header_left">
+        <a href="/users">Users</a>
+    </div>
+    <div id="header_right">
+        <span th:text="${user.username} + ' ' + ${user.authorities}"></span>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<form id="entity_form" class="data_form" action="/client/create" method="post">
+    <p class="error" th:if="${error != null}" th:text="${error}"></p>
+
+    <label for="first_name">First Name:</label>
+    <input type="text" name="first_name" id="first_name" pattern="\p{L}*"
+           th:field="*{client.firstName}" required>
+
+    <label for="last_name">Last Name:</label>
+    <input type="text" name="last_name" id="last_name" pattern="\p{L}*"
+           th:field="*{client.lastName}" required>
+
+    <label for="phone">Phone:</label>
+    <input type="text" name="phone" id="phone" pattern="\+\d{12}" th:field="*{client.phone}" required>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" th:field="*{client.email}" required>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" th:field="*{client.gender}">
+        <option th:each="gender : ${T(kteslenko.lab3.model.Gender).values()}"
+                th:value="${gender}" th:text="${gender.displayName}"></option>
+    </select>
+
+    <div class="checkbox_row">
+        <input type="checkbox" name="vip" id="vip" th:field="*{client.isVIP}">
+        <label for="vip">VIP</label>
+    </div>
+
+    <div class="button_row">
+        <button type="submit">Create</button>
+        <a href="/clients">
+            <button type="button">Cancel</button>
+        </a>
+    </div>
+</form>
+
+</body>
+
+</html>

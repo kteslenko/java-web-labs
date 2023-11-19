@@ -1,0 +1,138 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Clients</title>
+</head>
+
+<body>
+
+<div id="header">
+    <div id="header_left">
+        <a href="/users" sec:authorize="hasRole('ADMIN')">Users</a>
+    </div>
+    <div id="header_right">
+        <span th:text="${user.username} + ' ' + ${user.authorities}"></span>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div id="container">
+    <div>
+        <form class="data_form" action="/clients" method="get">
+
+            <h3>Sort</h3>
+
+            <label for="sort_column">Column:</label>
+            <select id="sort_column" name="sort_column" th:field="*{specification.sortColumn}">
+                <option th:each="column : ${T(kteslenko.lab3.specifications.ClientSpecification.SortColumn).values()}"
+                        th:value="${column}" th:text="${column.displayName}"
+                        th:selected="${specification.sortColumn.equals(column)}"></option>
+            </select>
+
+            <label for="sort_direction">Direction:</label>
+            <select id="sort_direction" name="sort_direction" th:field="*{specification.sortDirection}">
+                <option th:each="direction : ${T(kteslenko.lab3.specifications.SortDirection).values()}"
+                        th:value="${direction}" th:text="${direction.displayName}"
+                        th:selected="${specification.sortDirection.equals(direction)}"></option>
+            </select>
+
+            <h3>Filters</h3>
+
+            <label for="first_name_filter">First Name:</label>
+            <input type="text" name="first_name_filter" id="first_name_filter" pattern="\p{L}*"
+                   th:field="*{specification.firstName}">
+
+            <label for="last_name_filter">Last Name:</label>
+            <input type="text" name="last_name_filter" id="last_name_filter" pattern="\p{L}*"
+                   th:field="*{specification.lastName}">
+
+            <label for="phone_filter">Phone:</label>
+            <input type="text" name="phone_filter" id="phone_filter" pattern="\+?\d*"
+                   th:field="*{specification.phone}">
+
+            <label for="email_filter">Email:</label>
+            <input type="text" name="email_filter" id="email_filter" th:field="*{specification.email}">
+
+            <label>Gender:</label>
+            <div class="checkbox_row" th:each="gender : ${T(kteslenko.lab3.model.Gender).values()}">
+                <input type="checkbox" name="gender_filter" th:id="${'gender_filter_' + gender}" th:value="${gender}"
+                       th:checked="${specification.genders.contains(gender)}" th:field="*{specification.genders}">
+                <label th:for="${'gender_filter_' + gender}" th:text="${gender.displayName}"></label>
+            </div>
+
+            <label for="vip_filter">VIP:</label>
+            <select id="vip_filter" name="vip_filter" th:field="*{specification.isVIP}">
+                <option th:value="null">All</option>
+                <option th:value="true">True</option>
+                <option th:value="false">False</option>
+            </select>
+
+            <button type="submit">Apply</button>
+        </form>
+
+        <form class="data_form" action="/report" method="get">
+            <h3>Data Report</h3>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <table>
+
+        <tr sec:authorize="hasRole('ADMIN')">
+            <td colspan="9">
+                <form action="/client/create">
+                    <button type="submit">Create</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Is VIP</th>
+            <th>Addresses</th>
+            <th colspan="2" sec:authorize="hasRole('ADMIN')">Actions</th>
+        </tr>
+
+        <tr th:each="client : ${clients}">
+            <td th:text="${client.firstName}"></td>
+            <td th:text="${client.lastName}"></td>
+            <td th:text="${client.phone}"></td>
+            <td th:text="${client.email}"></td>
+            <td th:text="${client.gender.displayName}"></td>
+            <td th:text="${client.isVIP}"></td>
+            <td>
+                <form th:action="@{/client/{id}/addresses (id=${client.id})}">
+                    <button type="submit">Show</button>
+                </form>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <form th:action="@{/client/{id}/edit (id=${client.id})}">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <form th:action="@{/client/{id}/delete (id=${client.id})}" method="post">
+                    <button type="submit" onclick="return confirmation()">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<script>
+    function confirmation() {
+        return confirm('Are you sure you want to do this?');
+    }
+</script>
+</body>
+
+</html>

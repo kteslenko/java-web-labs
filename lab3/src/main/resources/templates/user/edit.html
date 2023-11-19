@@ -1,0 +1,40 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Edit User</title>
+</head>
+
+<body>
+
+<div id="header">
+    <div id="header_left">
+        <a href="/">Starting Page</a>
+    </div>
+    <div id="header_right">
+        <span th:text="${auth.username} + ' ' + ${auth.authorities}"></span>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<form id="entity_form" class="data_form" th:action="@{/user/{id}/edit (id=${user.id})}" method="post">
+    <p class="error" th:if="${error != null}" th:text="${error}"></p>
+
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" pattern="\w+"
+           th:field="*{user.username}" required>
+
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" pattern="\S*">
+
+    <div class="button_row">
+        <button type="submit">Save</button>
+        <a href="/users">
+            <button type="button">Cancel</button>
+        </a>
+    </div>
+</form>
+
+</body>
+
+</html>

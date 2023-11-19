@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TestDataGeneratorSettingsState">
+    <option name="userDefinedGenerators">
+      <list>
+        <CustomGeneratorSettings>
+          <option name="data">
+            <map>
+              <entry key="regex_key" value="\+380\d{9}" />
+            </map>
+          </option>
+          <option name="name" value="phone" />
+          <option name="type" value="Regex" />
+          <option name="vtlVariable" value="phone" />
+        </CustomGeneratorSettings>
+        <CustomGeneratorSettings>
+          <option name="data">
+            <map>
+              <entry key="dictionary_key" value="MALE&#10;FEMALE&#10;UNSPECIFIED" />
+            </map>
+          </option>
+          <option name="name" value="gender" />
+          <option name="vtlVariable" value="gender" />
+        </CustomGeneratorSettings>
+        <CustomGeneratorSettings>
+          <option name="data">
+            <map>
+              <entry key="dictionary_key" value="true&#10;false" />
+            </map>
+          </option>
+          <option name="name" value="boolean" />
+          <option name="vtlVariable" value="boolean" />
+        </CustomGeneratorSettings>
+        <CustomGeneratorSettings>
+          <option name="data">
+            <map>
+              <entry key="delimiter_key" value=", " />
+              <entry key="postfix_key" value=";" />
+              <entry key="prefix_key" value="INSERT INTO client (first_name, last_name, phone, email, gender, is_vip) VALUES " />
+              <entry key="template_key" value="('$fullName', '', '$phone', '$email', '$gender', $boolean)" />
+            </map>
+          </option>
+          <option name="name" value="client" />
+          <option name="type" value="Multiple" />
+        </CustomGeneratorSettings>
+      </list>
+    </option>
+  </component>
+</project>

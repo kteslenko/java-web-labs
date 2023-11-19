@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Create Address</title>
+</head>
+
+<body>
+
+<div id="header">
+    <div id="header_left">
+        <a href="/">Starting Page</a>
+        <a href="/users">Users</a>
+    </div>
+    <div id="header_right">
+        <span th:text="${user.username} + ' ' + ${user.authorities}"></span>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<form id="entity_form" class="data_form" th:action="@{/client/{clientId}/address/create (clientId=${clientId})}"
+      method="post">
+    <p class="error" th:if="${error != null}" th:text="${error}"></p>
+
+    <label for="cod_address">Cod Address:</label>
+    <input type="text" name="cod_address" id="cod_address" pattern="\p{L}*"
+           th:field="*{address.codAddress}" required>
+
+    <label for="city">City:</label>
+    <input type="text" name="city" id="city" pattern="\p{L}*"
+           th:field="*{address.city}" required>
+
+    <label for="address">Address:</label>
+    <input type="text" name="address" id="address" th:field="*{address.address}">
+
+    <label for="point_np">Point NP:</label>
+    <input type="number" min="1" name="point_np" id="point_np" th:field="*{address.pointNp}">
+
+    <label for="point_ukr_post">Point Ukr Post:</label>
+    <input type="number" min="1" name="point_ukr_post" id="point_ukr_post" th:field="*{address.pointUkrPost}">
+
+    <div class="button_row">
+        <button type="submit">Create</button>
+        <a th:href="@{/client/{clientId}/addresses (clientId=${clientId})}">
+            <button type="button">Cancel</button>
+        </a>
+    </div>
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+#container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.data_form h3:first-child {
+    margin-top: 0;
+}
+
+.data_form {
+    width: 250px;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.data_form .error {
+    color: red;
+}
+
+.data_form input:not([type=checkbox]), .data_form select {
+    width: 100%;
+    margin: 5px 0 10px 0;
+    display: block;
+    box-sizing: border-box;
+}
+
+.data_form button {
+    display: block;
+    margin: 20px auto 0 auto;
+}
+
+.checkbox_row {
+    margin: 5px 0 10px 0;
+}
+
+table {
+    flex-grow: 1;
+    margin-left: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px 10px;
+}
+
+td form {
+    margin: auto;
+    width: fit-content;
+}
+
+#client_form {
+    width: 350px;
+    margin: auto;
+}
+
+#client_form .button_row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#client_form .button_row * {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+#error_page_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(80vh);
+}
+
+#error_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 100px;
+    border: 1px solid black;
+    width: fit-content;
+}
+
+a {
+    color: black;
+}

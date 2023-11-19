@@ -1,0 +1,62 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Clients</title>
+</head>
+
+<body>
+
+<div id="header">
+    <div id="header_left">
+        <a href="/">Starting Page</a>
+    </div>
+    <div id="header_right">
+        <span th:text="${auth.username} + ' ' + ${auth.authorities}"></span>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div id="container">
+
+    <table id="user_table">
+
+        <tr>
+            <td colspan="3">
+                <form action="/user/create">
+                    <button type="submit">Create</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Username</th>
+            <th colspan="2" sec:authorize="hasRole('ADMIN')">Actions</th>
+        </tr>
+
+        <tr th:each="user : ${users}">
+            <td th:text="${user.username}"></td>
+            <td>
+                <form th:action="@{/user/{id}/edit (id=${user.id})}">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/user/{id}/delete (id=${user.id})}" method="post">
+                    <button type="submit" onclick="return confirmation()">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<script>
+    function confirmation() {
+        return confirm('Are you sure you want to do this?');
+    }
+</script>
+</body>
+
+</html>
